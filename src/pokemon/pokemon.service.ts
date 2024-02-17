@@ -5,15 +5,24 @@ import { Pokemon } from "./entities/pokemon.entity";
 import { isValidObjectId, Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { PaginacionDto } from "../common/dto/paginacion.dto";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class PokemonService {
   
+    private defautLimit: number;
+    private defaultOffset: number;
   constructor(
       @InjectModel(Pokemon.name)
-      private readonly pokemonModel: Model<Pokemon>
+      private readonly pokemonModel: Model<Pokemon>,
+      private readonly configService: ConfigService,
   ) {
-      console.log(process.env.DEFAULT_LIMIT)
+      // console.log(process.env.DEFAULT_LIMIT);
+      // const defaultLimit = configService.get<number>('defaultLimit');
+      // console.log({defaultLimit})
+      
+      this.defautLimit= configService.get<number>('defaultLimit');
+      this.defaultOffset= configService.get<number>('defaultOffset');
   }
   
   async create(createPokemonDto: CreatePokemonDto) {
@@ -32,7 +41,7 @@ export class PokemonService {
   }
   
   findAll(paginacionDto: PaginacionDto) {
-      const {limit = 10, offset = 0} = paginacionDto; //por default
+      const {limit = this.defautLimit, offset = this.defaultOffset} = paginacionDto; //por default
       
       return this.pokemonModel.find()
         .limit(limit)

@@ -4,14 +4,16 @@ import { PokemonController } from './pokemon.controller';
 import { MongooseModule } from "@nestjs/mongoose";
 import { Pokemon, PokemonSchema } from "./entities/pokemon.entity";
 import { PaginacionDto } from "../common/dto/paginacion.dto";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   controllers: [PokemonController],
   providers: [PokemonService,PaginacionDto],
   imports: [
-    MongooseModule.forFeature([{
-      name: Pokemon.name, //.name es de Document
-      schema: PokemonSchema,
+      ConfigModule,
+      MongooseModule.forFeature([{
+        name: Pokemon.name, //.name es de Document
+        schema: PokemonSchema,
     }])
   ],
   exports: [
