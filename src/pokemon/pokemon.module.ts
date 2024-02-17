@@ -3,10 +3,11 @@ import { PokemonService } from './pokemon.service';
 import { PokemonController } from './pokemon.controller';
 import { MongooseModule } from "@nestjs/mongoose";
 import { Pokemon, PokemonSchema } from "./entities/pokemon.entity";
+import { PaginacionDto } from "../common/dto/paginacion.dto";
 
 @Module({
   controllers: [PokemonController],
-  providers: [PokemonService],
+  providers: [PokemonService,PaginacionDto],
   imports: [
     MongooseModule.forFeature([{
       name: Pokemon.name, //.name es de Document
