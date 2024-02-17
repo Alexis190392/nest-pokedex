@@ -13,9 +13,14 @@ yarn install
 ```
 npm i -g @nestjs/cli
 ```
-4. Levantar bd
+4. Levantar BD
 ```
 docker-compose up -d
+```
+
+5. Reconstruir la BD con seed
+```
+localhost:3000/api/v2/seed
 ```
 
 
